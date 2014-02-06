@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <h1>Temperaturkonvertering</h1>
+        <h1>Gissa det hemliga talet</h1>
         <p>Någonting gick fel med att hantera din förfrågan.</p>
 
         <br />

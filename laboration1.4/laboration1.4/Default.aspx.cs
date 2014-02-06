@@ -9,14 +9,14 @@ namespace laboration1._4
 {
     public partial class Default : System.Web.UI.Page
     {
-        SecretNumber secretNumber = new SecretNumber();
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
             
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        public void Button1_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid)
             {
@@ -24,23 +24,67 @@ namespace laboration1._4
 
             else
             {
-                if (secretNumber.CanMakeGuess)
+                form1.DefaultButton = "SendButton";
+                
+                if (ViewState["PrevObject"] == null)
                 {
+                    SecretNumber secretNumber = new SecretNumber();
+                    ViewState["PrevObject"] = secretNumber;
+                }
+
+                var prevObj = (SecretNumber)ViewState["PrevObject"];
+
+                if (prevObj.CanMakeGuess)
+                {
+
 
                     int theGuess = int.Parse(Guess.Text);
 
-                    Outcome theOutcome = secretNumber.MakeGuess(theGuess);
+                    Outcome theOutcome = prevObj.MakeGuess(theGuess);
 
                     int result = (int)theOutcome;
 
-                    IReadOnlyCollection<int> writeList = secretNumber.PreviousGuesses();
-             
+                    IReadOnlyCollection<int> readOnlyGuesses = prevObj.PreviousGuesses();
 
-                    string writeNumbers;
+                    string myString;
+                    string message = "";
 
-                    for(int i = 0; i < writeList.Count; i++)
+                    foreach (int guess in readOnlyGuesses)
                     {
-                        writeNumbers += String.Format("{0}, ", );
+                        myString = string.Format("{0}, ", guess);
+                        message += myString;
+                    }
+
+                    if (result == 4) // No more guesses
+                    {
+                        prevObj.CanMakeGuess = false;
+
+                        int? getSecretNumber = prevObj.Number();
+
+                        message += String.Format("Du har inga gissningar kvar, det hemliga talet var {0}.", getSecretNumber);
+
+                        Guess.Enabled = false;
+                        SendButton.Visible = false;
+                        Redo.Visible = true;
+                        Guesses.Text = message;
+                        message = "";
+                    }
+
+                    if (result == 5) // Previous guess
+                    {
+                        message += "Du har redan gissat på det talet.";
+                        Guesses.Text = message;
+                    }
+
+                    if (result == 3) // Correct
+                    {
+                        message += String.Format("Grattis! Du klarade det på {0} försök!", prevObj.Count);
+
+                        Guess.Enabled = false;
+                        SendButton.Visible = false;
+                        Redo.Visible = true;
+                        Guesses.Text = message;
+                        message = "";
                     }
 
                     if (result == 0)
@@ -49,30 +93,18 @@ namespace laboration1._4
 
                     if (result == 1) // Low
                     {
-
+                        message += "Värdet är för lågt.";
+                        Guesses.Text = message;
                     }
 
                     if (result == 2) // High
                     {
-
+                        message += "Värdet är för högt.";
+                        Guesses.Text = message;
                     }
 
-                    if (result == 3) // Correct
-                    {
-
-                    }
-
-                    if (result == 4) // No more guesses
-                    {
-
-                    }
-
-                    if (result == 5) // Previous guess
-                    {
-
-                    }
-
-                    Guesses.Text = String.Format("{0}", theOutcome);
+                    
+                    ViewState["PrevObject"] = prevObj;
                 }
 
                 else
@@ -80,6 +112,17 @@ namespace laboration1._4
                 }
                 
             }
+        }
+
+        public void Redo_Click(object sender, EventArgs e)
+        {
+            this.form1.DefaultButton = "Redo";
+
+            ViewState["PrevObject"] = null;
+
+            Guess.Enabled = true;
+            SendButton.Visible = true;
+            Redo.Visible = false;
         }
     }
 }

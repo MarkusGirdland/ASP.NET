@@ -15,11 +15,12 @@ namespace laboration1._4
         PreviousGuess
     }
 
+    [Serializable]
     public class SecretNumber
     {
         private int _number;
         private List<int> _previousGuesses;
-        private const int MaxNumberOfGuesses = 7;
+        private const int MaxNumberOfGuesses = 6;
 
         public bool CanMakeGuess
         {
@@ -54,14 +55,22 @@ namespace laboration1._4
 
         public SecretNumber()
         {
-            this._number = 75;
+            Random random = new Random();
+
+            int randomInt = random.Next(1, 101);
+
+            this._number = randomInt;
             this._previousGuesses = new List<int>();
-            this._previousGuesses.Add(7);
+            this.CanMakeGuess = true;
         }
 
         public void Initialize()
         {
-            this._number = 75;      //TODO: Slumpa
+            Random random = new Random();
+
+            int randomInt = random.Next(1, 101);
+
+            this._number = randomInt;
             this._previousGuesses.Clear();
         }
 
@@ -74,6 +83,20 @@ namespace laboration1._4
         {
             if (guess > 0 && guess <= 100)
             {
+                if (Count == MaxNumberOfGuesses)
+                {
+                    return Outcome.NoMoreGuesses;
+                }
+
+                for (int i = 0; i < Count; i++)
+                {
+                    if (guess == this._previousGuesses[i])
+                    {
+                        return Outcome.PreviousGuess;
+                    }
+                }
+
+
                 if (guess == this._number)      // Korrekt
                 {
                     return Outcome.Correct;
@@ -81,41 +104,27 @@ namespace laboration1._4
 
                 else if (guess > this._number)  // För högt
                 {
-                    this._previousGuesses[Count] = guess;
+                    this._previousGuesses.Add(guess);
+                    // this._previousGuesses[Count] = guess;
                     Count++;
                     return Outcome.High;
                 }
 
                 else if (guess < this._number)  // För lågt
                 {
-                    this._previousGuesses[Count] = guess;
+                    this._previousGuesses.Add(guess);
+                    //this._previousGuesses[Count] = guess;
                     Count++;
                     return Outcome.Low;
                 }
-
-                else if (Count == MaxNumberOfGuesses)
-                {
-                    return Outcome.NoMoreGuesses;
-                }
-
-                else
-                {
-                    for (int i = 0; i < MaxNumberOfGuesses; i++)
-                    {
-                        if (guess == this._previousGuesses[i])
-                        {
-                            return Outcome.PreviousGuess;
-                        }
-                    }
-
-                    return Outcome.Indefinite;
-                }
             }
-
+        
             else
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            return Outcome.Indefinite;
         }
 
     }
