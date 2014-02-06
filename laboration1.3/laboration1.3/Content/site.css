@@ -1,0 +1,63 @@
+﻿.radioButton input
+ {    
+      float: left;
+ }
+
+ .radioButton label
+ {    
+      margin-left: 25px;
+      display: block;
+ }
+
+ body {
+    margin-top: 100px;
+    background-color: #3D3D3D;
+}
+
+p {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color: White;
+}
+
+h1 {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color: White;
+}
+
+input {
+    border: 5px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    padding: 5px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;
+}
+
+input[type=text] {padding:5px; border:2px solid #ccc;                   /* http://stackoverflow.com/questions/17042201/how-to-style-input-and-submit-button-with-css */
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+input[type=text]:focus {border-color:#333; }
+
+input[type=submit] {padding:5px 15px; background:#ccc; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
+
+#Table1 {
+    font-family: Calibri;
+    color: white;
+}
+
+#ValidationSummary1 {
+    font-family: 'Comic Sans MS';
+    color: #ff4444;
+}
