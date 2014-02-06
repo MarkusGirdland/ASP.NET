@@ -12,7 +12,7 @@
     <div>
         <h1>Temperaturkonvertering</h1>
         
-        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" HeaderText="Följande fel upptäcktes:" />
 
         <asp:RequiredFieldValidator ControlToValidate="StartTemp" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Fyll i en starttemperatur." Display="None"></asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ControlToValidate="EndTemp" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Fyll i en sluttemperatur." Display="None"></asp:RequiredFieldValidator>
